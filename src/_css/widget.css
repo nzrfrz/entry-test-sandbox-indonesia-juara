@@ -1,0 +1,40 @@
+/*#region ---------- balance card ---------- */
+.balance-card-container {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-basis: 300px;
+    height: 130px;
+    border-radius: var(--brdr);
+    background-color: var(--bgc);
+}
+
+.balance-card-image-container img {
+    position: absolute;
+    top: 12%;
+    right: 5%;
+    z-index: 0;
+    width: 120px;
+    height: 100px;
+    opacity: 0.2;
+}
+
+.balance-card-content-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 24px;
+    z-index: 1;
+}
+/*#endregion ---------- balance card ---------- */
+
+/*#region ---------- chart ---------- */
+.chart-container {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 300px;
+    border-radius: var(--brdr);
+    background-color: var(--bgc);
+}
+/*#endregion ---------- chart ---------- */

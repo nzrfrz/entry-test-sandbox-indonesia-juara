@@ -1,0 +1,62 @@
+.tour-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 52px;
+}
+
+.nav-container {
+    display: flex;
+    gap: 24px;
+}
+
+/*#region ---------- add tour page ---------- */
+.add-tour-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ck-editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.ck-editor-container > span::before,
+.uploader-container > span:nth-child(1):before {
+    display: inline-block;
+    margin-inline-end: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun,sans-serif;
+    line-height: 1;
+    content: "*";
+}
+
+.uploader-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    gap: 12px;
+}
+
+.uploader-container img {
+    width: 50%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.upload-button {
+    position: absolute;
+    bottom: 0;
+}
+
+.map-container {
+    height: 300px;
+    width: 100%;
+}
+/*#endregion ---------- add tour page ---------- */

@@ -1,0 +1,95 @@
+.transaction-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 6px 12px 6px;
+}
+
+.transaction-content-top-section-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.purchase-content {
+    cursor: pointer;
+    display: flex;
+    padding: 0px 12px 0px 12px;
+}
+
+.purchase-content span:nth-child(1) {
+    display: flex;
+    flex-grow: 1;
+}
+
+.payment-awaits-content {
+    cursor: pointer;
+    padding: 6px 12px 6px 12px;
+}
+
+.payment-awaits-content:hover {
+    background-color: var(--bgc);
+    transition: all .2s;
+}
+
+.purchase-tracking-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+.purchase-tracking-item-container {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100px;
+}
+
+.purchase-tracking-item-container:hover {
+    cursor: pointer;
+    background-color: var(--bgc);
+}
+
+.purchase-tracking-item-container img {
+    width: 70px;
+    align-self: center;
+}
+
+.purchase-tracking-item-container span {
+    text-align: center;
+}
+
+.transaction-content-below-section-container {
+    display: flex;
+    height: inherit;
+}
+
+.transaction-content-below-section-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 12px 0px 12px;
+    gap: 12px;
+}
+
+.transaction-content-below-section-container img {
+    display: flex;
+    align-self: center;
+    width: 150px;
+}
+
+.transaction-content-below-section-container span:nth-child(3) {
+    display: flex;
+    align-self: center;
+}
+
+.transaction-content-below-section-container span:nth-child(4) {
+    display: flex;
+    align-self: center;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    align-self: center;
+    width: 50%;
+}

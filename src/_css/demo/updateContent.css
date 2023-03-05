@@ -1,0 +1,41 @@
+.update-content-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-items {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 12px 12px 12px;
+    background-color: var(--bgc);
+}
+
+.update-items:hover {
+    cursor: pointer;
+    background-color: var(--bgHover);
+}
+
+.update-item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 6px;
+}
+
+.update-item-title {
+    margin-bottom: 6px;
+}
+
+.update-item-desc {
+    margin-bottom: 6px;
+}
+
+.update-item-image {
+    width: 100%;
+}
+
+.update-item-image img {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: contain;
+}

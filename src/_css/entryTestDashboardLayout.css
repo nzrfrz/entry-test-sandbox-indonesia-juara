@@ -1,0 +1,24 @@
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+}
+
+.sidebar-nav {
+    display: flex;
+    width: 173px;
+    flex-direction: column;
+    gap: 20px;
+    /* background-color: red; */
+}
+
+.sidebar-nav a.active span {
+    font-weight: 600;
+    color: var(--activeLink);
+}
+
+.dashboard-content {
+    display: flex;
+    width: 890px;
+    /* background-color: blue; */
+}

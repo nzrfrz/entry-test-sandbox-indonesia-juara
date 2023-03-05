@@ -1,0 +1,109 @@
+/*#region ---------- 1 column layout ---------- */
+.two-row-layout-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: var(--bgc);
+    gap: 24px;
+}
+
+.page-title-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    flex-grow: 1;
+}
+
+.page-title-container span {
+    flex: 1 1 150px;
+}
+/*#endregion ---------- 1 column layout ---------- */
+
+/*#region ---------- 2 row layout ---------- */
+.two-row-layout-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.top-section {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 24px;
+    background-color: var(--bgc);
+    gap: 24px;
+    transition: all 0.3s;
+}
+
+.top-section div:nth-child(3) {
+    flex-grow: 1;
+}
+
+.bottom-section {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: var(--bgc);
+}
+/*#endregion ---------- 2 row layout ---------- */
+
+/*#region ---------- 3 column layout ---------- */
+.three-col-layout-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.three-col-layout-container > * {
+    display: flex;
+    flex: 1 0 300px;
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+    border-radius: var(--brRd);
+    background-color: var(--bgc);
+}
+/*#endregion ---------- 3 column layout ---------- */
+
+/*#region ---------- 1 row 3 col layout ---------- */
+.one-row-three-col-layout-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.layout-three-top-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px;
+    border-radius: var(--brRd);
+    background-color: var(--bgc);
+}
+
+.layout-three-bottom-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.layout-three-bottom-section > * {
+    display: flex;
+    flex: 1 0 300px;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: var(--brRd);
+    background-color: var(--bgc);
+}
+/*#endregion ---------- 1 row 3 col layout ---------- */

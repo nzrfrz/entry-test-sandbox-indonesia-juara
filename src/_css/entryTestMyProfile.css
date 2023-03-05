@@ -1,0 +1,46 @@
+.profile-page-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 52px;
+}
+
+.profile {
+    display: flex;
+    gap: 24px;
+}
+
+.image-container {
+    display: flex;
+    position: relative;
+    width: 126px;
+    height: 126px;
+}
+
+.image-container img {
+    border-radius: 50%;
+}
+
+.image-container button {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+}
+
+.profile-info {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-info span:nth-child(1) {
+    font-size: 34px;
+    font-weight: 600;
+}
+
+.save-button {
+    display: flex;
+    align-items: center;
+}

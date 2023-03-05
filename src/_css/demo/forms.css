@@ -1,0 +1,59 @@
+.form-container {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px;
+    background-color: var(--bgc);
+}
+
+/*#region ---------- update forms ---------- */
+.update-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.user-table-container {
+    position: relative;
+    z-index: 1;
+    padding: 12px;
+    background-color: var(--bgc);
+}
+
+.table-action-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.form-update-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-basis: 300px;
+    padding: 12px;
+    background-color: var(--bgc);
+    opacity: 1;
+    transition: all 0.5s;
+}
+/*#endregion ---------- update forms ---------- */
+
+/*#region ---------- split forms ---------- */
+.split-forms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.split-forms-container > * {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    flex-basis: 300px;
+    flex-direction: column;
+    padding: 12px;
+    background-color: var(--bgc);
+}
+/*#endregion ---------- split forms ---------- */

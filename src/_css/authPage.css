@@ -1,0 +1,10 @@
+/*#region ---------- layout ---------- */
+.auth-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    height: 100dvh;
+    background: #121518;
+}
+/*#endregion ---------- layout ---------- */
