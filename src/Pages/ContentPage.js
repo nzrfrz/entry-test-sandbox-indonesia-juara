@@ -29,14 +29,14 @@ export const ContentPage = () => {
         return divContainer.textContent || divContainer.innerText || "";
     };
 
-    const data = geoData;
+    // const data = geoData;
 
-    for (let i = 0; i < data.data.coordinates[0].length; i++) {
-        const arrayToSwap = data.data.coordinates[0][i];
-        data.data.coordinates[0][i] = [arrayToSwap[1], arrayToSwap[0]];
-    }
+    // for (let i = 0; i < data.data.coordinates[0].length; i++) {
+    //     const arrayToSwap = data.data.coordinates[0][i];
+    //     data.data.coordinates[0][i] = [arrayToSwap[1], arrayToSwap[0]];
+    // }
 
-    console.log(data);
+    // console.log(data);
 
     return (
         <div 

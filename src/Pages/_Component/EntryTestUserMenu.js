@@ -31,9 +31,7 @@ const items = [
     }
 ];
 
-export const EntryTestUserMenu = ({navigateTo, apiNotif, mutateLogout, mutateLogin, dataUser}) => {
-
-    const getLocalToken = useLocalToken();
+export const EntryTestUserMenu = ({navigateTo, mutateLogout, mutateLogin, cachedData, getLocalToken}) => {
     
     const handleMenuClick = (e) => {
         switch (e.key) {
@@ -63,8 +61,8 @@ export const EntryTestUserMenu = ({navigateTo, apiNotif, mutateLogout, mutateLog
             menu={menuProps}
         >
             <div className="dropdown-button-container">
-                <img src={dataUser?.photo} alt="profile" />
-                <Text>{dataUser?.full_name}</Text>
+                <img src={cachedData?.data?.photo} alt="profile" />
+                <Text>{cachedData?.data?.full_name}</Text>
                 <DownOutlined />
             </div>
         </Dropdown>

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useQueryData } from "../local/queryService";
+// import { useQueryData } from "../local/queryService";
 
 export const useLocalToken = () => {
+    // console.log("GET TOKEN");
     const token = localStorage.getItem("token");
 
     return token;
@@ -22,30 +23,16 @@ export const entryTestLogout = async (formData) => {
     return data;
 };
 
-export const useGetUserEntryTest = (apiNotif = undefined, accessToken) => {
-    // console.log("GET USER PROFILE", accessToken);
-    const [data, setData] = useState(undefined);
-    // console.log(data);
+export const entryTestGetUser = async (accessToken) => {
+    const response = await axios.get("https://api-entrytest.sandboxindonesia.id/api/user/user/me/", {
+        headers: {
+            "Authorization": `Bearer ${accessToken}`,
+        }
+    });
 
-    const fetchData = async () => {
-        axios.get("https://api-entrytest.sandboxindonesia.id/api/user/user/me/", {
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            })
-            .then((response) => {
-                setData(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
+    const data = response.data;
 
-    useEffect(() => {
-        fetchData();
-    }, [accessToken]);
-
-    return { data };
+    return data;
 };
 
 export const entryTestChangePassword = async (payload) => {

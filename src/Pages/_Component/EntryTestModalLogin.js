@@ -14,7 +14,7 @@ export const EntryTestModalLogin = ({isModalFormOpen, setIsModalFormOpen, formPr
     // console.log(mutateLogin);
 
     const onFinishForm = (values) => {
-        console.log(values);
+        // console.log(values);
         mutateLogin.mutateAsync(values);
     };
 

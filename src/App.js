@@ -50,7 +50,7 @@ function App() {
   return (
     <ConfigProvider
       theme={{ 
-        algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
+        algorithm: defaultAlgorithm,
         token: themeToken(isDarkMode),
       }}
     >

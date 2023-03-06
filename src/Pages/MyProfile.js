@@ -14,7 +14,7 @@ import profilePic from "../_assets/entryTest_profilePhoto.png";
 import { AddressForm, EmailForm, SimpleInputForm, SimpleNumberForm } from "./_Component";
 
 import { getBase64 } from "../_helper";
-import { useLocalToken, useGetUserEntryTest, entryTestChangeProfile, useAuthMutate } from "../_services";
+import { useLocalToken, useGetUserEntryTest, entryTestChangeProfile, useAuthMutate, useMutateData, useCachedData } from "../_services";
 
 const { Text } = Typography
 
@@ -26,14 +26,13 @@ export const MyProfile = () => {
     const [previewImage, setPreviewImage] = useState(undefined);
 
     const localToken = useLocalToken();
-    const mutateData = useAuthMutate("Ubah Profil", entryTestChangeProfile, undefined, form, apiNotif);
-    const getUserData = useGetUserEntryTest(undefined, JSON.parse(localToken).access);
-    // console.log(previewImage);
+    const mutateData = useMutateData("put", entryTestChangeProfile, ["userProfile"], undefined, apiNotif);
+    const cachedData = useCachedData(["userProfile"]);
 
     const handlePreviewImage = async (file) => {
         await getBase64(file.originFileObj)
         .then((data) => {
-            console.log(data);
+            // console.log(data);
             setPreviewImage(data);
         })
     };
@@ -52,12 +51,12 @@ export const MyProfile = () => {
 
     useEffect(() => {
         form.setFieldsValue({
-            full_name: getUserData?.data?.full_name,
-            email: getUserData?.data?.email,
-            address: getUserData?.data?.address,
-            handphone: getUserData?.data?.handphone,
+            full_name: cachedData?.data?.full_name,
+            email: cachedData?.data?.email,
+            address: cachedData?.data?.address,
+            handphone: cachedData?.data?.handphone,
         });
-    }, [getUserData]);
+    }, [cachedData]);
 
     if (localToken === null) return <Navigate to={"/error"} replace />
 
@@ -65,7 +64,7 @@ export const MyProfile = () => {
         <div className="profile-page-container">
             <div className="profile">
                 <div className="image-container">
-                    <img src={previewImage !== undefined ? previewImage : getUserData?.data?.photo} />
+                    <img src={previewImage !== undefined ? previewImage : cachedData?.data?.photo} />
                     <Upload
                         name="avatar"
                         showUploadList={false}
@@ -84,8 +83,8 @@ export const MyProfile = () => {
                     </Upload>
                 </div>
                 <div className="profile-info">
-                    <Text>{getUserData?.data?.full_name}</Text>
-                    <Text>{getUserData?.data?.address}</Text>
+                    <Text>{cachedData?.data?.full_name}</Text>
+                    <Text>{cachedData?.data?.address}</Text>
                 </div>
                 <div className="save-button">
                     <Form

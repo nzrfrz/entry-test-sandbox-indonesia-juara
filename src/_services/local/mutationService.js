@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, QueryCache } from "@tanstack/react-query";
 
 import { openNotification } from "../../Pages/_Component";
-import { useGetUserEntryTest } from "../http/entryTestAuthUser";
+// import { useGetUserEntryTest } from "../http/entryTestAuthUser";
 
 export const useMutateData = (httpMethod, fetchFn, queryKey, formProps, apiNotif, setIsModalFormOpen = undefined, navigate = undefined, routePath = undefined) => {
     const httpMethodAlias = () => {
@@ -34,12 +34,11 @@ export const useMutateData = (httpMethod, fetchFn, queryKey, formProps, apiNotif
     return useMutation({
         mutationFn: fetchFn,
         onMutate: () => {
-            console.log("POSTING DATA: ");
+            // console.log("POSTING DATA: ");
             openNotification(apiNotif, queryKey.toString(), "info", httpMethodAlias().messageInfo, "Please do not close, change, or refresh the page !!");
         },
         onSuccess: (data) => {
-            console.log("POST SUCCESS: ", data);
-            formProps?.resetFields();
+            // console.log("POST SUCCESS: ", data);
             queryClient.invalidateQueries(queryKey, {exact: true});
             openNotification(apiNotif, queryKey.toString(), "success", "Success", httpMethodAlias().successDescription);
             if (navigate !== undefined) {
@@ -48,17 +47,21 @@ export const useMutateData = (httpMethod, fetchFn, queryKey, formProps, apiNotif
             else if (setIsModalFormOpen !== undefined) {
                 return setIsModalFormOpen(false);
             }
+            else if (formProps !== undefined) {
+                formProps?.resetFields();
+            }
         },
         onError: (data) => {
-            console.log("POST ERROR: ", data);
+            // console.log("POST ERROR: ", data);
             openNotification(apiNotif, queryKey.toString(), "error", "Error", httpMethodAlias().errorDescription);
         }
     });
 };
 
-export const useAuthMutate = (httpMethod, fetchFn, lsKey, formProps, apiNotif, setIsModalFormOpen = undefined, navigateTo) => {
+export const useAuthMutate = (httpMethod, queryKey, fetchFn, lsKey, formProps, apiNotif, setIsModalFormOpen = undefined, navigateTo) => {
     // console.log(httpMethod);
     const queryCache = new QueryCache(); 
+    const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: fetchFn,
@@ -69,9 +72,12 @@ export const useAuthMutate = (httpMethod, fetchFn, lsKey, formProps, apiNotif, s
         onSuccess: (data) => {
             // console.log("LOGIN SUCCESS: ", data);
             formProps?.resetFields();
-            openNotification(apiNotif, httpMethod, "success", "Success", `${httpMethod} Brehasil`);
+            openNotification(apiNotif, httpMethod, "success", "Success", `${httpMethod} Berhasil`);
             if (setIsModalFormOpen !== undefined) {
                 setIsModalFormOpen(false);
+            }
+            else if (queryKey !== undefined) {
+                queryClient.invalidateQueries(queryKey, {exact: true});
             }
             
             switch (true) {
@@ -81,7 +87,7 @@ export const useAuthMutate = (httpMethod, fetchFn, lsKey, formProps, apiNotif, s
                 case httpMethod === "Logout":
                     localStorage.clear();
                     queryCache.clear();
-                    navigateTo("/")
+                    navigateTo("/");
                     break;
                 default:
                     break;

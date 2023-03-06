@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import 'dayjs/locale/id';
@@ -17,7 +17,7 @@ import iconTele from "../_assets/icons8-telegram-app-96.png";
 import iconPin from "../_assets/icons8-pinterest-96.png";
 import iconTwit from "../_assets/icons8-twitter-96.png";
 
-import { useGetUserEntryTest, useLocalToken } from "../_services";
+import { useCachedData, useGetUserEntryTest, useLocalToken } from "../_services";
 
 import { MapLeaflet } from "./_Component";
 
@@ -49,8 +49,14 @@ const socialMediaIcon = [
 export const TourismDetail = () => {
     const {state} = useLocation();
     const getLocalToken = useLocalToken();
-    const getUserProfile = useGetUserEntryTest(undefined, JSON.parse(getLocalToken)?.access);
-    console.log(state.data);
+
+    const getUserProfile = useCachedData(["userProfile"]);
+    
+    const [position, setPosition] = useState([0, 0]);
+
+    useEffect(() => {
+        setPosition([state?.data?.location?.coordinates[1], state?.data?.location?.coordinates[0]]);
+    }, [state]);
 
     function getText(html) {
         var divContainer = document.createElement("div");
@@ -116,8 +122,10 @@ export const TourismDetail = () => {
                 </div>
 
                 <MapLeaflet 
-                    lat={state.data.location.coordinates[0]}
-                    long={state.data.location.coordinates[1]}
+                    position={position}
+                    setPosition={setPosition}
+                    // lat={state.data.location.coordinates[0]}
+                    // long={state.data.location.coordinates[1]}
                 />
 
             </div>

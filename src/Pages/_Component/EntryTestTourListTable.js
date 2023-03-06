@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../App";
 
 import { 
     Table,
@@ -7,7 +8,8 @@ import {
 } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
-import { useCachedData } from "../../_services";
+import { useCachedData, useMutateData, useLocalToken } from "../../_services";
+import { entryTestTourismSpotDelete } from "../../_services/http";
 
 import {
     ButtonWarning, 
@@ -19,8 +21,11 @@ const { Text } = Typography;
 
 export const EntryTestTourListTable = () => {
     const navigateTo = useNavigate();
+    const { apiNotif } = useContext(GlobalContext);
 
-    const cachedData = useCachedData(["tourismObjectList"]);
+    const cachedData = useCachedData(["tourismObjectListMe"]);
+    const mutateData = useMutateData("delete", entryTestTourismSpotDelete, ["tourismObjectList"], undefined, apiNotif);
+    const localToken = useLocalToken();
 
     const tableData = useMemo(() => {
         return cachedData?.data?.map((data, index) => {
@@ -76,6 +81,15 @@ export const EntryTestTourListTable = () => {
                 <div className="table-action-button-container">
                     <TableButtonViewDetail 
                         onClick={() => {
+                            navigateTo(
+                                `/detail_wisata/${record.name}`,
+                                {
+                                    state: {
+                                        method: "View Detail", 
+                                        data: record
+                                    }
+                                }
+                            );
                             // setIsModalFormOpen(true);
                             // setHTTPMethod("viewDetail");
                             // setFormFieldValue(record);
@@ -101,7 +115,7 @@ export const EntryTestTourListTable = () => {
                     <TableButtonDelete 
                         rowData={record.name}
                         onClick={() => {
-                            // mutateData.mutateAsync(record.id);
+                            mutateData.mutateAsync({slug: record.slug, accessToken: JSON.parse(localToken)?.access});
                         }}
                     />
                 </div>

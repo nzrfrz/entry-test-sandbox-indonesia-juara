@@ -34,16 +34,16 @@ export const HomeLayout = () => {
     const [form] = Form.useForm();
 
     const [isModalFormOpen, setIsModalFormOpen] = useState(false);
-    const [httpMethod, setHttpMethod] = useState(undefined);
 
-    const mutateLogin = useAuthMutate("Login", entryTestLogin, "token", form, apiNotif, setIsModalFormOpen);
-    const mutateLogout = useAuthMutate("Logout", entryTestLogout, undefined, undefined, apiNotif, undefined, navigateTo);
+    const mutateLogin = useAuthMutate("Login", ["userProfile"], entryTestLogin, "token", form, apiNotif, setIsModalFormOpen);
+    const mutateLogout = useAuthMutate("Logout", ["userProfile"], entryTestLogout, undefined, undefined, apiNotif, undefined, navigateTo);
+    const cachedData = useCachedData(["userProfile"]);
     const getLocalToken = useLocalToken();
-    const getUserProfile = useGetUserEntryTest(undefined, mutateLogin?.data?.access || JSON.parse(getLocalToken)?.access);
+    // const getUserProfile = useGetUserEntryTest(undefined, mutateLogin?.data?.access || JSON.parse(getLocalToken)?.access);
     // console.log("MUTATE LOGIN: ", mutateLogin?.data?.access || JSON.parse(getLocalToken)?.access);
     // console.log(`MUTATE LOGIN: ${mutateLogin?.data?.access}  LOCAL TOKEN: ${JSON.parse(getLocalToken)?.access}`);
     // console.log("MUTATE LOGOUT: ", mutateLogout);
-    // console.log("GET USER PROFILE: ", getUserProfile.data);
+    // console.log("GET USER PROFILE: ", cachedData);
 
     const [windowDimension, setWindowDiemnsion] = useState({
         width: window.innerWidth,
@@ -95,7 +95,7 @@ export const HomeLayout = () => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
                     {
-                        getLocalToken === null && (mutateLogin?.data === undefined || mutateLogout?.isSuccess === true) ?
+                        (cachedData?.data === undefined || getLocalToken === null) && (mutateLogin?.data === undefined || mutateLogout?.isSuccess === true) ?
                         <Button
                             type="primary"
                             shape="round"
@@ -109,10 +109,10 @@ export const HomeLayout = () => {
                         :
                         <EntryTestUserMenu 
                             navigateTo={navigateTo}
-                            apiNotif={apiNotif}
                             mutateLogout={mutateLogout}
                             mutateLogin={mutateLogin}
-                            dataUser={getUserProfile.data}
+                            cachedData={cachedData}
+                            getLocalToken={getLocalToken}
                         />
                     }
                 </div>

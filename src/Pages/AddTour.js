@@ -38,9 +38,13 @@ export const AddTour = () => {
     const [tourismPic, setTourismPic] = useState(undefined);
     const [previewImage, setPreviewImage] = useState(undefined);
     const [CKEditorData, setCKEditorData] = useState("Input Deskripsi");
+    const [position, setPosition] = useState([0, 0]);
 
-    const mutatePost = useMutateData("post", entryTestTourismSpotNew, ["tourismObjectList"], undefined, apiNotif, undefined, navigateTo, "/wisata_saya");
-    const mutatePatch = useMutateData("put", entryTestTourismSpotEdit, ["tourismObjectList"], undefined, apiNotif, undefined, navigateTo, "/wisata_saya");
+    // console.log(state?.data?.location.coordinates);
+    // console.log("POSITION: ", position);
+
+    const mutatePost = useMutateData("post", entryTestTourismSpotNew, ["tourismObjectListMe"], undefined, apiNotif, undefined, navigateTo, "/wisata_saya");
+    const mutatePatch = useMutateData("put", entryTestTourismSpotEdit, ["tourismObjectListMe"], undefined, apiNotif, undefined, navigateTo, "/wisata_saya");
     const cachedData = useCachedData(["tourismObjectCategory"]);
     const localToken = useLocalToken();
 
@@ -65,9 +69,9 @@ export const AddTour = () => {
         const location = {
             type: "Point",
             coordinates: [
-                110.27032762700007,
-                -7.821741714999944,
-            ]
+                state?.data === undefined ? position.lng : position[1],
+                state?.data === undefined ? position.lat : position[0],
+            ],
         };
         const accessToken = JSON.parse(localToken)?.access;
         const dataForm = {
@@ -79,18 +83,19 @@ export const AddTour = () => {
             image: tourismPic,
             category_data: cachedData?.data?.filter((data) => values.category === data.slug).shift(),
             location: JSON.stringify(location),
+            // location: location,
         };
 
-        // if (state?.data === undefined) {
-        //     mutatePost.mutateAsync({dataForm, accessToken});
-        // }
-        // else {
-        //     mutatePatch.mutateAsync({dataForm, accessToken, slug: state?.data?.slug});
-        // }
-        console.log(JSON.parse(localToken)?.refresh);
+        if (state?.data === undefined) {
+            mutatePost.mutateAsync({dataForm, accessToken});
+        }
+        else {
+            mutatePatch.mutateAsync({dataForm, accessToken, slug: state?.data?.slug});
+        }
+        // console.log(location.coordinates);
     };
 
-    console.log(state?.data?.slug);
+    // console.log(state?.data?.slug);
 
     const tourismImage = useMemo(() => {
         switch (true) {
@@ -105,8 +110,18 @@ export const AddTour = () => {
 
     useEffect(() => {
         if (state?.data !== undefined) {
+            fetch(`https://${state?.data?.image.replace("http://", "")}`)
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+                setTourismPic(file);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
             setCKEditorData(state?.data.description);
-            setTourismPic(state?.data?.image);
+            setPosition([state?.data?.location?.coordinates[1], state?.data?.location?.coordinates[0]]);
             form.setFieldsValue({
                 slug: state?.data.slug,
                 name: state?.data.name,
@@ -180,7 +195,6 @@ export const AddTour = () => {
                     onChange={(event, editor) => {
                         const data = editor.getData();
                         setCKEditorData(data);
-                        // console.log(data);
                     }}
                 />
             </div>
@@ -201,9 +215,8 @@ export const AddTour = () => {
             </Form>
 
             <MapLeaflet 
-                lat={state?.data.location.coordinates[0]}
-                long={state?.data.location.coordinates[1]}
-                markerPopUp={state?.data.name}
+                position={position}
+                setPosition={setPosition}
             />
 
             <Form

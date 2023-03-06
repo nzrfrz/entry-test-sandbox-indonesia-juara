@@ -1,25 +1,35 @@
 import axios from "axios";
-import { useQueryData } from "./queryService";
+import { useQuery } from "@tanstack/react-query";
+import { useQueryData, useQueryDataWithToken } from "./queryService";
 import { 
     getIndonesiaRegionData, 
     getDialCode,
     getUserProfile,
     useLocalToken,
     getTourismObject,
+    getTourismObjectMe,
     getTourismObjectCategories,
     getTourismObjectMapBoundaries,
     entryTestGetUser,
-    useGetUserEntryTest
+    useGetUserEntryTest,
+    useChekTokenValidity
 } from "../http";
 
-export const useParallelFetching = (apiNotif, localToken) => {
-    // useQueryData(["indonesiaRegionData"], getIndonesiaRegionData, apiNotif);
-    // useQueryData(["phoneDialCode"], getDialCode, apiNotif);
-    useQueryData(["localToken"], useLocalToken, apiNotif);
+const getUserPath = "https://api-entrytest.sandboxindonesia.id/api/user/user/me/";
+const getTourismObjectMePath = "https://api-entrytest.sandboxindonesia.id/api/tourist-object/tourist-object/me/?me=true";
+
+export const useParallelFetching = (apiNotif) => {
+    const token = JSON.parse(useLocalToken())?.access;
+    const refresh = JSON.parse(useLocalToken())?.refresh;
+    // console.log(token);
+
+    useQueryData(["token"], useLocalToken, undefined);
     useQueryData(["tourismObjectCategory"], getTourismObjectCategories, apiNotif);
     useQueryData(["borderLine"], getTourismObjectMapBoundaries, apiNotif);
     // console.log(localToken);
-    // useGetUserEntryTest(undefined, localToken);
 
     useQueryData(["tourismObjectList"], getTourismObject, apiNotif);
+    // useQueryData(["tourismObjectListMe"], getTourismObjectMe, apiNotif);
+    useQueryDataWithToken(["userProfile"], getUserPath, undefined, token, refresh, axios);
+    useQueryDataWithToken(["tourismObjectListMe"], getTourismObjectMePath, undefined, token, refresh, axios);
 };
